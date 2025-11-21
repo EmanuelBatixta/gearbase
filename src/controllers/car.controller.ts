@@ -15,7 +15,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { CarDto, CarDtoGet, CarDtoPut } from 'src/dtos/car.dtos';
+import { CarDto, CarDtoGet, CarDtoPut } from '../dtos/car.dto';
 
 @Controller('cars')
 export class CarController {
