@@ -8,6 +8,7 @@ export function setupSwagger(app: INestApplication) {
       'API documentation for GearBase application, this application is a car management system that allows users to perform CRUD operations on car entities.',
     )
     .addServer('http://localhost:3000')
+    .addServer('https://gearbase-5efa.onrender.com')
     .setVersion('1.0')
     .build();
 
