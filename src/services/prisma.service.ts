@@ -9,7 +9,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     const connectionString = process.env.DATABASE_URL!;
     super({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       adapter: new PrismaPg({ connectionString }) as SqlDriverAdapterFactory,
     });
   }
