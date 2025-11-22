@@ -18,4 +18,32 @@ model Car {
   hp       Int
   city_mpg Float
   hwy_mpg  Float
+
+  category     Category
+  transmission Transmission
+  fuel_type    FuelType[]
+  torque       Int
+  acceleration Float?
+}
+
+enum Category {
+  SEDAN
+  SUV
+  VAN
+  HATCHBACK
+  COUPE
+  TRUCK
+}
+
+enum Transmission {
+  AUTOMATIC
+  MANUAL
+}
+
+enum FuelType {
+  GASOLINE
+  DIESEL
+  ELECTRIC
+  HIBRID
+  ETHANOL
 }

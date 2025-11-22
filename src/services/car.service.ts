@@ -32,6 +32,11 @@ export class CarService {
     hp: number;
     city_mpg: number;
     hwy_mpg: number;
+    category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
+    transmission: 'MANUAL' | 'AUTOMATIC';
+    fuel_type: ('GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HIBRID' | 'ETHANOL')[];
+    torque: number;
+    acceleration?: number | null;
   }) {
     return await this.prisma.car.create({
       data: data,
@@ -55,6 +60,11 @@ export class CarService {
       hp: number;
       city_mpg: number;
       hwy_mpg: number;
+      category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
+      transmission: 'MANUAL' | 'AUTOMATIC';
+      fuel_type: ('GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HIBRID' | 'ETHANOL')[];
+      torque: number;
+      acceleration?: number | null;
     }>,
   ) {
     return await this.prisma.car.update({

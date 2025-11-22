@@ -1,6 +1,13 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsInt, IsNumber, IsString, Min } from 'class-validator';
+import {
+  IsEnum,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export class CarDto {
   @ApiProperty({ example: 'Honda' })
@@ -30,6 +37,34 @@ export class CarDto {
   @IsNumber()
   @Min(1)
   hwy_mpg: number;
+
+  @ApiProperty({ example: 'Sedan' })
+  @IsString({ message: 'Category invalid value' })
+  @IsEnum(['SEDAN', 'SUV', 'TRUCK', 'COUPE', 'HATCHBACK', 'VAN'])
+  category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
+
+  @ApiProperty({ example: 'Automatic' })
+  @IsString({ message: 'Transmission invalid value' })
+  @IsEnum(['MANUAL', 'AUTOMATIC'])
+  transmission: 'MANUAL' | 'AUTOMATIC';
+
+  @ApiProperty({ example: 'GASOLINE' })
+  @IsString({ message: 'Fuel type invalid value' })
+  @IsEnum(['GASOLINE', 'DIESEL', 'ELECTRIC', 'HIBRID', 'ETHANOL'], {
+    each: true,
+  })
+  fuel_type: ('GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HIBRID' | 'ETHANOL')[];
+
+  @ApiProperty({ example: 170 })
+  @IsNumber()
+  @Min(1)
+  torque: number;
+
+  @ApiProperty({ example: 7.5, required: false })
+  @IsNumber()
+  @Min(1)
+  @IsOptional()
+  acceleration?: number | null;
 }
 
 export class CarDtoGet extends CarDto {
