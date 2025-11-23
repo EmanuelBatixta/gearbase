@@ -50,10 +50,8 @@ export class CarDto {
 
   @ApiProperty({ example: 'GASOLINE' })
   @IsString({ message: 'Fuel type invalid value' })
-  @IsEnum(['GASOLINE', 'DIESEL', 'ELECTRIC', 'HIBRID', 'ETHANOL'], {
-    each: true,
-  })
-  fuel_type: ('GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HIBRID' | 'ETHANOL')[];
+  @IsEnum(['GASOLINE', 'DIESEL', 'ELECTRIC', 'HYBRID', 'ETHANOL', 'FLEX'])
+  fuel_type: 'GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HYBRID' | 'ETHANOL' | 'FLEX';
 
   @ApiProperty({ example: 170 })
   @IsNumber()

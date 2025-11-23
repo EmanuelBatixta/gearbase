@@ -34,7 +34,13 @@ export class CarService {
     hwy_mpg: number;
     category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
     transmission: 'MANUAL' | 'AUTOMATIC';
-    fuel_type: ('GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HIBRID' | 'ETHANOL')[];
+    fuel_type:
+      | 'GASOLINE'
+      | 'DIESEL'
+      | 'ELECTRIC'
+      | 'HYBRID'
+      | 'ETHANOL'
+      | 'FLEX';
     torque: number;
     acceleration?: number | null;
   }) {
@@ -62,7 +68,13 @@ export class CarService {
       hwy_mpg: number;
       category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
       transmission: 'MANUAL' | 'AUTOMATIC';
-      fuel_type: ('GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HIBRID' | 'ETHANOL')[];
+      fuel_type:
+        | 'GASOLINE'
+        | 'DIESEL'
+        | 'ELECTRIC'
+        | 'HYBRID'
+        | 'ETHANOL'
+        | 'FLEX';
       torque: number;
       acceleration?: number | null;
     }>,
