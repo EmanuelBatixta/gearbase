@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsEnum,
   IsInt,
@@ -12,10 +12,12 @@ import {
 export class CarDto {
   @ApiProperty({ example: 'Honda' })
   @IsString({ message: 'Make must be a string' })
+  @Transform(({ value }) => (value as string).trim().toUpperCase())
   make: string;
 
   @ApiProperty({ example: 'Civic' })
   @IsString({ message: 'Model must be a string' })
+  @Transform(({ value }) => (value as string).trim().toUpperCase())
   model: string;
 
   @ApiProperty({ example: 2020 })
