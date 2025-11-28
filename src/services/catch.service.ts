@@ -3,6 +3,7 @@ import {
   Catch,
   ArgumentsHost,
   HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Prisma } from 'generated/prisma/client';
@@ -20,7 +21,16 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     if (exception instanceof Prisma.PrismaClientKnownRequestError) {
       status = 400;
       message = `[Prisma error ${exception.code}]: ${exception.meta?.modelName} model ${exception.meta?.operation} method failed `;
+    } else if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      message = exception.message;
     }
+    
+
+    this.logger.error(
+      `Status: ${status} | Path: ${request.url} | Message: ${message}`,
+      exception.stack,
+    );
 
     response.status(status).json({
       statusCode: status,
