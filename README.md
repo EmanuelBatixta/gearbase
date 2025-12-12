@@ -1,98 +1,85 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Gearbase
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+**Descrição:** Projeto backend em NestJS para gerencia um catálogo de especificções técnicas de carros, usando Prisma como ORM.
 
-## Description
+**Tecnologias:** NestJS, TypeScript, Prisma, PostgreSQL (conforme `prisma/schema.prisma`), Jest (testes).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Status:** Em desenvolvimento — algumas partes (ex.: `auth.service.ts`) ainda não estão implementadas.
 
-## Project setup
+**Rápido:**
+- **Instalar dependências:** `npm install`
+- **Gerar Prisma client:** `npm run prisma` (executa `prisma generate`)
+- **Rodar em desenvolvimento:** `npm run dev`
+
+**Variáveis de ambiente:**
+- `DATABASE_URL` : string de conexão com o banco (Postgres). Exemplo: `postgresql://USER:PASSWORD@HOST:PORT/DATABASE`
+- `PORT` : porta opcional (padrão `3000`)
+
+Crie um arquivo `.env` na raiz com ao menos `DATABASE_URL` definido antes de iniciar.
+
+Comandos úteis:
 
 ```bash
-$ npm install
+# instalar dependências
+npm install
+
+# gerar Prisma client
+npm run prisma
+
+# aplicar migrações (desenvolvimento)
+npx prisma migrate dev
+
+# ou aplicar migrações em ambiente com migrações já geradas
+npx prisma migrate deploy
+
+# iniciar em modo dev (com log pretty)
+npm run dev
+
+# rodar testes
+npm test
+npm run test:e2e
 ```
 
-## Compile and run the project
+**Endpoints principais (prefixo global: `/api/v1`)**
 
-```bash
-# development
-$ npm run start
+- **POST** `/api/v1/user` : criar usuário (`UserDto`)
+- **DELETE** `/api/v1/user/:id` : deletar usuário
 
-# watch mode
-$ npm run start:dev
+- **GET** `/api/v1/cars` : listar carros
+- **GET** `/api/v1/cars/:model` : listar carros por modelo
+- **GET** `/api/v1/cars/make?make=` : listar carros por fabricante (query)
+- **POST** `/api/v1/cars` : criar carro (`CarDto`)
+- **DELETE** `/api/v1/cars/:id` : deletar carro
+- **PUT** `/api/v1/cars/:id` : atualizar carro (`CarDtoPut`)
 
-# production mode
-$ npm run start:prod
-```
+Documentação Swagger está habilitada e acessível em: `http://localhost:<PORT>/api/docs` (o projeto já chama `setupSwagger` em `main.ts`).
 
-## Run tests
+**Banco de dados / Prisma**
+- O generator do Prisma escreve o client em `generated/prisma`.
+- O arquivo de schema é `prisma/schema.prisma` e usa `provider = "postgresql"`.
+- Migrações já existem em `prisma/migrations` — aplique-as com `npx prisma migrate deploy` ou use `npx prisma migrate dev` durante desenvolvimento.
 
-```bash
-# unit tests
-$ npm run test
+**Autenticação / API Keys**
+- Existe um serviço de tokens em `src/services/key.service.ts` que gera/verifica tokens guardados na tabela `Token`.
+- O `auth.service.ts` está vazio (pendente) — a proteção/autenticação das rotas ainda precisa ser concluída.
 
-# e2e tests
-$ npm run test:e2e
+**Arquitetura / Organização**
+- `src/controllers` — rotas/controle
+- `src/services` — lógica de negócio e integração com Prisma
+- `src/dtos` — DTOs e validação
+- `src/middlewares` — filtros e logger personalizados
 
-# test coverage
-$ npm run test:cov
-```
+**TODO / Próximos passos**
+- Implementar `auth.service.ts` (JWT ou estratégia desejada) e aplicar guardas nas rotas que devem ser protegidas.
+- Adicionar `.env.example` com variáveis mínimas e instruções.
+- Implementar testes de integração para endpoints críticos.
+- Validar e endurecer as operações de criação/atualização (checar checagens e erros esperados).
 
-## Deployment
+**Contribuindo**
+- Fork ou branch, abra PRs pequenas e testáveis. Inclua testes quando possível.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+**Contato / Autor**
+- Emanuel Batista
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

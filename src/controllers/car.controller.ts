@@ -7,12 +7,16 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CarService } from '../services/car.service';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiOkResponse,
+  ApiQuery,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { CarDto, CarDtoGet, CarDtoPut } from '../dtos/car.dto';
@@ -35,9 +39,15 @@ export class CarController {
     return await this.carService.findByModel(model);
   }
 
-  @Get('make/:make')
+  @Get('make')
   @ApiOkResponse({ description: 'List of cars by make' })
-  async getCarByMake(@Param('make') make: string): Promise<CarDtoGet[] | null> {
+  @ApiQuery({
+    name: 'make',
+    required: false,
+    type: String,
+    description: 'Make of car',
+  })
+  async getCarByMake(@Query('make') make: string): Promise<CarDtoGet[]> {
     return await this.carService.findByMake(make);
   }
 
@@ -56,6 +66,7 @@ export class CarController {
     return await this.carService.deleteCar(id);
   }
 
+  @UsePipes(ValidationPipe)
   @Put(':id')
   @ApiOkResponse({ description: 'Car updated successfully' })
   @ApiBadRequestResponse({ description: 'Invalid car data' })

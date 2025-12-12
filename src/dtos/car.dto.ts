@@ -76,3 +76,9 @@ export class CarDtoGet extends CarDto {
 }
 
 export class CarDtoPut extends PartialType(CarDto) {}
+
+export class carQuery {
+  @ApiProperty({ example: '?make="toyota"' })
+  @IsOptional()
+  make?: string;
+}

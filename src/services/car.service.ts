@@ -10,19 +10,25 @@ export class CarService {
   }
 
   async findByModel(model: string) {
-    model = model.trim().toUpperCase();
+    //model = model.trim().toUpperCase();
     return await this.prisma.car.findMany({
       where: {
-        model: model,
+        model: {
+          contains: model,
+          mode: 'insensitive',
+        },
       },
     });
   }
 
   async findByMake(make: string) {
-    make = make.trim().toUpperCase();
+    // make = make.trim().toUpperCase();
     return await this.prisma.car.findMany({
       where: {
-        make: make,
+        make: {
+          contains: make,
+          mode: 'insensitive',
+        },
       },
     });
   }
