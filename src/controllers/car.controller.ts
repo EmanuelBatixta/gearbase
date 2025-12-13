@@ -27,28 +27,30 @@ export class CarController {
 
   @Get()
   @ApiOkResponse({ description: 'List of cars' })
-  async getCars(): Promise<CarDtoGet[]> {
-    return await this.carService.findAll();
-  }
-
-  @Get(':model')
-  @ApiOkResponse({ description: 'List of cars by model' })
-  async getCarByModel(
-    @Param('model') model: string,
-  ): Promise<CarDtoGet[] | null> {
-    return await this.carService.findByModel(model);
-  }
-
-  @Get('make')
-  @ApiOkResponse({ description: 'List of cars by make' })
   @ApiQuery({
     name: 'make',
     required: false,
     type: String,
     description: 'Make of car',
   })
-  async getCarByMake(@Query('make') make: string): Promise<CarDtoGet[]> {
-    return await this.carService.findByMake(make);
+  @ApiQuery({
+    name: 'model',
+    required: false,
+    type: String,
+    description: 'Model of car',
+  })
+  @ApiQuery({
+    name: 'year',
+    required: false,
+    type: Number,
+    description: 'Year of car',
+  })
+  async getCars(
+    @Query('make') make?: string,
+    @Query('model') model?: string,
+    @Query('year') year?: number,
+  ): Promise<CarDtoGet[]> {
+    return await this.carService.findByQueries(make, model, year);
   }
 
   @Post()

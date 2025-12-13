@@ -42,15 +42,18 @@ export class CarDto {
 
   @ApiProperty({ example: 'Sedan' })
   @IsString({ message: 'Category invalid value' })
+  @Transform(({ value }) => (value as string).trim().toUpperCase())
   @IsEnum(['SEDAN', 'SUV', 'TRUCK', 'COUPE', 'HATCHBACK', 'VAN'])
   category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
 
   @ApiProperty({ example: 'Automatic' })
   @IsString({ message: 'Transmission invalid value' })
+  @Transform(({ value }) => (value as string).trim().toUpperCase())
   @IsEnum(['MANUAL', 'AUTOMATIC'])
   transmission: 'MANUAL' | 'AUTOMATIC';
 
   @ApiProperty({ example: 'GASOLINE' })
+  @Transform(({ value }) => (value as string).trim().toUpperCase())
   @IsString({ message: 'Fuel type invalid value' })
   @IsEnum(['GASOLINE', 'DIESEL', 'ELECTRIC', 'HYBRID', 'ETHANOL', 'FLEX'])
   fuel_type: 'GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HYBRID' | 'ETHANOL' | 'FLEX';

@@ -21,14 +21,25 @@ export class CarService {
     });
   }
 
-  async findByMake(make: string) {
+  async findByQueries(make?: string, model?: string, year?: number) {
     // make = make.trim().toUpperCase();
     return await this.prisma.car.findMany({
       where: {
-        make: {
-          contains: make,
-          mode: 'insensitive',
-        },
+        ...(make && {
+          make: {
+            contains: make,
+            mode: 'insensitive',
+          },
+        }),
+        ...(model && {
+          model: {
+            contains: model,
+            mode: 'insensitive',
+          },
+        }),
+        ...(year && {
+          year,
+        }),
       },
     });
   }
