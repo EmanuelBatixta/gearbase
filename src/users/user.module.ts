@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from './services/prisma.service';
-import { ApiKeyService } from './services/key.service';
+import { UserService } from './services/user.service';
+import { UserController } from './controllers/user.controller';
 import { LoggerModule } from 'nestjs-pino';
-import { CustomLogger } from './middlewares/custom.logger';
-import { CarModule } from './cars/car.module';
-import { UserModule } from './users/user.module';
+import { CustomLogger } from '../middlewares/custom.logger';
+import { PrismaService } from 'src/services/prisma.service';
 
 @Module({
   imports: [
@@ -24,10 +23,9 @@ import { UserModule } from './users/user.module';
             : undefined,
       },
     }),
-    CarModule,
-    UserModule,
   ],
-  providers: [PrismaService, ApiKeyService, CustomLogger],
-  exports: [CustomLogger, PrismaService],
+  controllers: [UserController],
+  providers: [UserService, CustomLogger, PrismaService],
+  exports: [],
 })
-export class AppModule {}
+export class UserModule {}

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from '../../services/prisma.service';
 import bcrypt from 'bcrypt';
 
 @Injectable()
@@ -43,7 +43,7 @@ export class UserService {
     }
 
     const { password, ...secureResponse } = response;
-
+    
     return secureResponse;
   }
 }

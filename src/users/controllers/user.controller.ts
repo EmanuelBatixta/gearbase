@@ -12,8 +12,8 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { UserDto } from 'src/dtos/user.dto';
-import { UserService } from 'src/services/user.service';
+import { UserDto } from 'src/users/dtos/user.dto';
+import { UserService } from 'src/users/services/user.service';
 
 @Controller('user')
 export class UserController {
