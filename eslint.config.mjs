@@ -7,6 +7,9 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   {
     ignores: ['eslint.config.mjs'],
+    rules: {
+      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+    }
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,

@@ -53,6 +53,7 @@ export class CarController {
     return await this.carService.findByQueries(make, model, year);
   }
 
+  @UsePipes(ValidationPipe)
   @Post()
   @ApiCreatedResponse({ description: 'Car created successfully' })
   @ApiBadRequestResponse({ description: 'Invalid car data' })

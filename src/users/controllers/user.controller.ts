@@ -4,7 +4,8 @@ import {
   Body,
   Delete,
   Param,
-  ParseIntPipe,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -12,25 +13,35 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { UserDto } from 'src/users/dtos/user.dto';
-import { UserService } from 'src/users/services/user.service';
+import { UserDto, UserResponseDto } from '../dtos/user.dto';
+import { UserService } from '../services/user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UsePipes(ValidationPipe)
   @Post()
-  @ApiCreatedResponse({ description: 'User was created' })
+  @ApiCreatedResponse({
+    description: 'User was created',
+    type: UserResponseDto,
+  })
   @ApiBadRequestResponse({ description: 'Invalid user data' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
-  async createUser(@Body() userData: UserDto): Promise<UserDto> {
-    return await this.userService.createUser(userData);
+  async createUser(@Body() userData: UserDto): Promise<UserResponseDto> {
+    const result = await this.userService.createUser(userData);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, password, ...safeResponse } = result;
+    return safeResponse;
   }
 
   @Delete(':id')
   @ApiOkResponse({ description: 'User deleted successfully' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
-  async deleteUser(@Param('id', ParseIntPipe) id: string): Promise<UserDto> {
-    return await this.userService.deleteAccount(id);
+  async deleteUser(@Param('id') id: string): Promise<UserResponseDto> {
+    const result = await this.userService.deleteAccount(id);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...safeResponse } = result;
+    return safeResponse;
   }
 }

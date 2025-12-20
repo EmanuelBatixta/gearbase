@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../services/prisma.service';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
   async createUser(data: { username: string; password: string }) {
     const hash = await bcrypt.hash(data.password, 10);
-    return await this.prisma.user.create({
+    const result = await this.prisma.user.create({
       data: {
         username: data.username,
         password: hash,
       },
     });
+    return result;
   }
 
   async updatePassword(id: string, password: string) {
@@ -42,8 +43,9 @@ export class UserService {
       return false;
     }
 
-    const { password, ...secureResponse } = response;
-    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: password, ...secureResponse } = response;
+
     return secureResponse;
   }
 }

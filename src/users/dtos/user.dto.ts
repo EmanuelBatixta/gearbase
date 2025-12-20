@@ -21,3 +21,11 @@ export class UserDto {
 }
 
 export class UserDtoPut extends PartialType(UserDto) {}
+
+export class UserResponseDto {
+  @ApiProperty({ example: 'User_name123' })
+  username: string;
+
+  @ApiProperty({ example: '2025-12-20T17:40:46.842Z' })
+  createdAt: Date;
+}
