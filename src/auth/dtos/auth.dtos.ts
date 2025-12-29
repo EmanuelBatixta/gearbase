@@ -1,16 +1,12 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsEmail, IsString, IsStrongPassword } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsStrongPassword } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-export class UserDto {
+export class AuthDto {
   @ApiProperty({ example: 'User_name123' })
   @IsString({ message: 'Username must be a string' })
   @Transform(({ value }) => (value as string).trim())
   username: string;
-
-  @ApiProperty({ example: 'user@example.com' })
-  @IsEmail({})
-  email: string;
 
   @ApiProperty({ example: 'Str@ngP4ssword123' })
   @IsStrongPassword({
@@ -21,15 +17,18 @@ export class UserDto {
     minUppercase: 1,
   })
   @Transform(({ value }) => (value as string).trim())
-  password: string;
+  pass: string;
 }
 
-export class UserDtoPut extends PartialType(UserDto) {}
-
-export class UserResponseDto {
+export class AuthDtoResponse {
   @ApiProperty({ example: 'User_name123' })
+  @IsString({ message: 'Username must be a string' })
+  @Transform(({ value }) => (value as string).trim())
   username: string;
 
-  @ApiProperty({ example: '2025-12-20T17:40:46.842Z' })
+  @ApiProperty({ example: ' ' })
   createdAt: Date;
+
+  @ApiProperty({ example: ' ' })
+  updatedAt: Date;
 }

@@ -50,7 +50,8 @@ enum FuelType {
 
 model User {
   id        String   @id @default(uuid())
-  username String   @unique
+  email     String   @unique
+  username  String   @unique
   password  String
   token     Token[]
   createdAt DateTime @default(now())

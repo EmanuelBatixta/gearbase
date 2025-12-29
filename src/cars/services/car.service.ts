@@ -11,7 +11,7 @@ export class CarService {
 
   async findByModel(model: string) {
     //model = model.trim().toUpperCase();
-    return await this.prisma.car.findMany({
+    const result = await this.prisma.car.findMany({
       where: {
         model: {
           contains: model,
@@ -19,6 +19,7 @@ export class CarService {
         },
       },
     });
+    return { data: result };
   }
 
   async findByQueries(make?: string, model?: string, year?: number) {

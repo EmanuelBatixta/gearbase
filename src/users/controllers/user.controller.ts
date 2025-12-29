@@ -24,7 +24,6 @@ export class UserController {
   @Post()
   @ApiCreatedResponse({
     description: 'User was created',
-    type: UserResponseDto,
   })
   @ApiBadRequestResponse({ description: 'Invalid user data' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
