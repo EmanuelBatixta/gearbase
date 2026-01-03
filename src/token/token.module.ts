@@ -26,6 +26,6 @@ import { ApiKeyService } from './service/token.service';
   ],
   controllers: [ApiKeyController],
   providers: [ApiKeyService, CustomLogger, PrismaService],
-  exports: [],
+  exports: [ApiKeyService],
 })
 export class ApiKeyModule {}

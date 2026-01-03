@@ -5,26 +5,9 @@ import { PrismaService } from '../../services/prisma.service';
 export class CarService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll() {
-    return await this.prisma.car.findMany();
-  }
-
-  async findByModel(model: string) {
-    //model = model.trim().toUpperCase();
-    const result = await this.prisma.car.findMany({
-      where: {
-        model: {
-          contains: model,
-          mode: 'insensitive',
-        },
-      },
-    });
-    return { data: result };
-  }
-
   async findByQueries(make?: string, model?: string, year?: number) {
     // make = make.trim().toUpperCase();
-    return await this.prisma.car.findMany({
+    const result = await this.prisma.car.findMany({
       where: {
         ...(make && {
           make: {
@@ -43,6 +26,7 @@ export class CarService {
         }),
       },
     });
+    return { data: result };
   }
 
   async createCar(data: {

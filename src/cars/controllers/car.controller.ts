@@ -8,19 +8,24 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CarService } from '../services/car.service';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiQuery,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { CarDto, CarDtoGet, CarDtoPut } from '../dtos/car.dto';
+import { CarDto, CarDtoPut } from '../dtos/car.dto';
+import { ApiKeyGuard } from 'src/services/auth.guards';
 
+@ApiBearerAuth('access-token')
+@UseGuards(ApiKeyGuard)
 @Controller('cars')
 export class CarController {
   constructor(private readonly carService: CarService) {}
@@ -49,7 +54,7 @@ export class CarController {
     @Query('make') make?: string,
     @Query('model') model?: string,
     @Query('year') year?: number,
-  ): Promise<CarDtoGet[]> {
+  ): Promise<object> {
     return await this.carService.findByQueries(make, model, year);
   }
 

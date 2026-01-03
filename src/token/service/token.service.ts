@@ -31,11 +31,9 @@ export class ApiKeyService {
     return result;
   }
 
-  async verifyToken(data: { apiKey: string; userId: string }) {
-    //const hash = await bcrypt.hash(apiKey, 10);
+  async verifyToken(data: { apiKey: string }) {
     const tokens = await this.prisma.token.findMany({
       where: {
-        userId: data.userId,
         revoke: false,
       },
     });
@@ -47,7 +45,7 @@ export class ApiKeyService {
     for (const t of tokens) {
       const isValid = await bcrypt.compare(data.apiKey, t.token);
       if (isValid) {
-        return true;
+        return t.userId;
       }
     }
     throw new UnauthorizedException('Invalid API Key');

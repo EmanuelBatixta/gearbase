@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import {
   IsEnum,
   IsInt,
@@ -68,14 +68,6 @@ export class CarDto {
   @Min(1)
   @IsOptional()
   acceleration?: number | null;
-}
-
-export class CarDtoGet extends CarDto {
-  @ApiProperty({ example: 2580 })
-  @Type(() => Number)
-  @IsNumber()
-  @Min(1)
-  id: number;
 }
 
 export class CarDtoPut extends PartialType(CarDto) {}
