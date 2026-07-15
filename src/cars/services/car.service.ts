@@ -39,12 +39,7 @@ export class CarService {
     category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
     transmission: 'MANUAL' | 'AUTOMATIC';
     fuel_type:
-      | 'GASOLINE'
-      | 'DIESEL'
-      | 'ELECTRIC'
-      | 'HYBRID'
-      | 'ETHANOL'
-      | 'FLEX';
+      'GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HYBRID' | 'ETHANOL' | 'FLEX';
     torque: number;
     acceleration?: number | null;
   }) {
@@ -73,12 +68,7 @@ export class CarService {
       category: 'SEDAN' | 'SUV' | 'TRUCK' | 'COUPE' | 'HATCHBACK' | 'VAN';
       transmission: 'MANUAL' | 'AUTOMATIC';
       fuel_type:
-        | 'GASOLINE'
-        | 'DIESEL'
-        | 'ELECTRIC'
-        | 'HYBRID'
-        | 'ETHANOL'
-        | 'FLEX';
+        'GASOLINE' | 'DIESEL' | 'ELECTRIC' | 'HYBRID' | 'ETHANOL' | 'FLEX';
       torque: number;
       acceleration?: number | null;
     }>,

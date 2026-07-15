@@ -53,7 +53,7 @@ export class CarController {
   async getCars(
     @Query('make') make?: string,
     @Query('model') model?: string,
-    @Query('year') year?: number,
+    @Query('year', new ParseIntPipe({ optional: true })) year?: number,
   ): Promise<object> {
     return await this.carService.findByQueries(make, model, year);
   }
